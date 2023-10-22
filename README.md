@@ -12,13 +12,13 @@ Laravel is a web application framework with expressive, elegant syntax. We belie
 
 ### Phase 01
 
-[#f03c15](User Registration ) 
-- ** User Login & issue JWT token (end point)
-- ** Sending OTP Code to Email - Password Recovery Stage 01 (end point)
-- ** Verify OTP Code - Password Recover Stage 02 (end point)
-- ** Allow user to reset password - Password Recover Stage 03(end point)
-- ** Allow user to get profile details (end point)
-- ** Allow user to update profiel details (end point)
+1. User Registration  
+2. User Login & issue JWT token (end point)
+3. Sending OTP Code to Email - Password Recovery Stage 01 (end point)
+4. Verify OTP Code - Password Recover Stage 02 (end point)
+5. Allow user to reset password - Password Recover Stage 03(end point)
+6. Allow user to get profile details (end point)
+7. Allow user to update profiel details (end point)
 
 
 ### Phase 02
