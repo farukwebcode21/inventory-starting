@@ -8,8 +8,20 @@ Laravel is a web application framework with expressive, elegant syntax. We belie
 - [Powerful dependency injection container](https://laravel.com/docs/container).
 - Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
 
+## Inventory project install project link and details  under
+
+### Phase 01
+
+1 - ** User Registration (end point) 
+- ** User Login & issue JWT token (end point)
+- ** Sending OTP Code to Email - Password Recovery Stage 01 (end point)
+- ** Verify OTP Code - Password Recover Stage 02 (end point)
+- ** Allow user to reset password - Password Recover Stage 03(end point)
+- ** Allow user to get profile details (end point)
+- ** Allow user to update profiel details (end point)
 
 
+### Phase 02
 
 
 ## Laravel Sponsors
