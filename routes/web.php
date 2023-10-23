@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -11,8 +12,13 @@ use Illuminate\Support\Facades\Route;
 | routes are loaded by the RouteServiceProvider and all of them will
 | be assigned to the "web" middleware group. Make something great!
 |
-*/
+ */
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::controller(UserController::class)->group(function () {
+    Route::post('user-registation', 'User_Registation');
+    Route::get('user-login', 'userLogin');
 });

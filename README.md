@@ -13,12 +13,18 @@ Laravel is a web application framework with expressive, elegant syntax. We belie
 ### Phase 01
 
 1. User Registration  
-2. User Login & issue JWT token (end point)
+2. [User Login & issue JWT token] (https://github.com/firebase/php-jwt)
 3. Sending OTP Code to Email - Password Recovery Stage 01 (end point)
 4. Verify OTP Code - Password Recover Stage 02 (end point)
 5. Allow user to reset password - Password Recover Stage 03(end point)
 6. Allow user to get profile details (end point)
 7. Allow user to update profiel details (end point)
+
+## JWT Token Install code
+
+```
+composer require firebase/php-jwt
+``` 
 
 
 ### Phase 02
