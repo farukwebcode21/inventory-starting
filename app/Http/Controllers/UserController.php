@@ -103,16 +103,9 @@ class UserController extends Controller {
         if ($count == 1) {
             User::where('email', '=', $email)->update(['otp' => '0']);
             $token = JWTToken::createUserTokenForResetPassword($request->input('email'));
-            return response()->json([
-                'status'  => 'success',
-                'message' => ' OTP Verification successfull',
-                'token'   => $token,
-            ], 200);
+            return ResponseHelper::out('OTP Verification successfull', $token, 200);
         } else {
-            return response()->json([
-                'status'  => 'failed',
-                'message' => 'Please Try again Your OTP Does not match',
-            ], 501);
+            return ResponseHelper::out('Please Try again Your OTP Does not match', null, 501);
         }
 
     }
