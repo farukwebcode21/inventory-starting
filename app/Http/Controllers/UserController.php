@@ -73,4 +73,80 @@ class UserController extends Controller {
             return ResponseHelper::out('failed', $e->getMessage(), 501);
         }
     }
+
+    // public function verifyOtp(Request $request) {
+    //     $credentials = $request->only('email', 'otp');
+
+    //     if (User::where($credentials)->count() === 1) {
+    //         // OTP Update
+    //         User::where('email', '=', $credentials('email'))->update(['otp' => '0']);
+    //         // Password Reset Token Issue
+    //         $token = JWTToken::createUserTokenForResetPassword($request->input('email'));
+    //         return response()->json([
+    //             'status'  => 'success',
+    //             'message' => 'OTP Verify Successfully',
+    //             'token'   => $token,
+    //         ], 200);
+    //     } else {
+    //         return response()->json([
+    //             'status'  => 'failed',
+    //             'message' => 'otp verification failed',
+    //         ], 501);
+    //     }
+
+    // }
+
+    public function VerifyOTP(Request $request) {
+        $email = $request->input('email');
+        $otp = $request->input('otp');
+        $count = User::where('email', '=', $email)->where('otp', '=', $otp)->count();
+        if ($count == 1) {
+            User::where('email', '=', $email)->update(['otp' => '0']);
+            $token = JWTToken::createUserTokenForResetPassword($request->input('email'));
+            return response()->json([
+                'status'  => 'success',
+                'message' => ' OTP Verification successfull',
+                'token'   => $token,
+            ], 200);
+        } else {
+            return response()->json([
+                'status'  => 'failed',
+                'message' => 'Please Try again Your OTP Does not match',
+            ], 501);
+        }
+
+    }
+
+    // public function verifyOtp(Request $request) {
+    //     $email = $request->input('email');
+    //     $otp = $request->input('otp');
+
+    //     // Log inputs for debugging
+    //     Log::info("Email: $email, OTP: $otp");
+
+    //     // Trim inputs to remove leading/trailing spaces
+    //     $email = trim($email);
+    //     $otp = trim($otp);
+
+    //     $count = User::where('email', $email)->where('otp', $otp)->count();
+
+    //     // Log count for debugging
+    //     Log::info("Count: $count");
+
+    //     if ($count == 1) {
+    //         // OTP Update
+    //         User::where('email', $email)->update(['otp' => '0']);
+
+    //         // Password Reset Token Issue
+    //         $token = JWTToken::createUserTokenForResetPassword($email);
+
+    //         // Log token for debugging
+    //         Log::info("Token: $token");
+
+    //         return ResponseHelper::out('OTP Verify Successful', $token, 200);
+    //     } else {
+    //         return ResponseHelper::out('failed', null, 501);
+    //     }
+    // }
+
 }

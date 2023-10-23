@@ -22,4 +22,5 @@ Route::controller(UserController::class)->group(function () {
     Route::post('user-registation', 'User_Registation');
     Route::post('user-login', 'userLogin');
     Route::post('send-otp', 'sendOtpCode');
+    Route::post('verify-otp', 'VerifyOTP');
 });
