@@ -20,5 +20,6 @@ Route::get('/', function () {
 
 Route::controller(UserController::class)->group(function () {
     Route::post('user-registation', 'User_Registation');
-    Route::get('user-login', 'userLogin');
+    Route::post('user-login', 'userLogin');
+    Route::post('send-otp', 'sendOtpCode');
 });

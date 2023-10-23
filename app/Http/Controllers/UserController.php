@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Helper\JWTToken;
 use App\Helper\ResponseHelper;
+use App\Mail\ResetPasswordMail;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller {
 
@@ -51,4 +53,24 @@ class UserController extends Controller {
     //         return ResponseHelper::out('Login failed', null, 500);
     //     }
     // }
+
+    public function sendOtpCode(Request $request) {
+        // validate the input
+        $request->validate(['email' => 'required|email']);
+        try {
+            // Find the user or throw and exception
+            $user = User::where('email', $request->input('email'))->firstOrFail();
+            // Generate OTP
+            $otp = rand(1000, 9000);
+            // Send OTP via Email
+            Mail::to($user->email)->send(new ResetPasswordMail($otp));
+
+            // Update the OTP in the user table
+            $user->update(['otp' => $otp]);
+            // Return success response
+            return ResponseHelper::out('send 4 dight otp', $otp, 200);
+        } catch (Exception $e) {
+            return ResponseHelper::out('failed', $e->getMessage(), 501);
+        }
+    }
 }
