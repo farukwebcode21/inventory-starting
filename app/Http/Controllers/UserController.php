@@ -105,7 +105,7 @@ class UserController extends Controller {
             $token = JWTToken::createUserTokenForResetPassword($request->input('email'));
             return ResponseHelper::out('OTP Verification successfull', $token, 200);
         } else {
-            return ResponseHelper::out('Please Try again Your OTP Does not match', null, 501);
+            return ResponseHelper::out('Please Try again Your OTP Does not match', 'Token is not Correct', 401);
         }
 
     }
@@ -141,5 +141,43 @@ class UserController extends Controller {
     //         return ResponseHelper::out('failed', null, 501);
     //     }
     // }
+
+    // public function resetPassword(Request $request) {
+    //     try {
+    //         $email = $request->header('email');
+    //         $password = $request->input('password');
+    //         User::where('email', '=', $email)->update(['password' => $password]);
+    //         return response()->json([
+    //             'status'  => 'success',
+    //             'message' => 'password reset successfully',
+    //         ], status: 200);
+    //     } catch (Exception $e) {
+    //         return response()->json([
+    //             'status'  => 'failed',
+    //             'message' => 'something wrong',
+    //         ], status: 401);
+    //     }
+    // }
+
+    public function resetPassword(Request $request) {
+        try {
+            // Validate input
+            $request->validate(['password' => 'required|min:8']);
+            $email = $request->header('email');
+            // Check if the user with the given email exists
+            $user = User::where('email', $email)->first();
+            if (!$user) {
+                return ResponseHelper::out('User not found', null, 404);
+            }
+            // Update the password
+            $user->update(['password' => $request->input('password')]);
+            // $user->update(['password' => bcrypt($request->input('password'))]);
+            return ResponseHelper::out('Password reset successfully', null, 200);
+
+        } catch (Exception $e) {
+            // return ResponseHelper::out('password Minimun 8 character required', null . $e->getMessage(), 500);
+            return ResponseHelper::out('Error updating password: ' . $e->getMessage(), null, 500);
+        }
+    }
 
 }
