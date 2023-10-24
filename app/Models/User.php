@@ -15,7 +15,10 @@ class User extends Model {
         'password',
         'otp',
     ];
+    protected $casts = [
+        'otp' => 'integer',
+    ];
     protected $attributes = [
-        'otp' => '0',
+        'otp' => 0,
     ];
 }

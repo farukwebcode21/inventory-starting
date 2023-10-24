@@ -14,10 +14,26 @@ class UserController extends Controller {
 
     public function User_Registation(Request $request) {
         try {
-            $user = User::create($request->input());
-            return ResponseHelper::out('success', $user, 200);
+            // Validate input
+            $validateData = $request->validate([
+                'firstName' => 'required|string|max:50',
+                "lastName"  => 'required|string|max:50',
+                'email'     => 'required|email|unique:users|max:255',
+                'mobile'    => 'required|string|unique:users|max:20',
+                'password'  => 'required|string|min:8',
+            ]);
+
+            // Has the password
+            $user = User::create([
+                'firstName' => $validateData['firstName'],
+                'lastName'  => $validateData['lastName'],
+                'email'     => $validateData['email'],
+                'mobile'    => $validateData['mobile'],
+                'password'  => $validateData['password'],
+            ]);
+            return ResponseHelper::out('success', $user, 201);
         } catch (Exception $e) {
-            return ResponseHelper::out('failed', null, 500);
+            return ResponseHelper::out('failed' . $e->getMessage(), null, 500);
         }
 
     }
@@ -71,6 +87,7 @@ class UserController extends Controller {
             return ResponseHelper::out('send 4 dight otp', $otp, 200);
         } catch (Exception $e) {
             return ResponseHelper::out('failed', $e->getMessage(), 501);
+
         }
     }
 
