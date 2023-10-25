@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\TokenVerification;
 use Illuminate\Support\Facades\Route;
@@ -15,14 +16,28 @@ use Illuminate\Support\Facades\Route;
 |
  */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::controller(UserController::class)->group(function () {
+    Route::post('userRegistration', 'User_Registation');
+    Route::post('userLogin', 'userLogin');
+    Route::post('sendOtp', 'sendOtpCode');
+    Route::post('verifyOtp', 'VerifyOTP');
+    Route::post('resetPassword', 'resetPassword')->middleware([TokenVerification::class]);
 });
 
-Route::controller(UserController::class)->group(function () {
-    Route::post('user-registation', 'User_Registation');
-    Route::post('user-login', 'userLogin');
-    Route::post('send-otp', 'sendOtpCode');
-    Route::post('verify-otp', 'VerifyOTP');
-    Route::post('reset-pass', 'resetPassword')->middleware([TokenVerification::class]);
+Route::controller(HomeController::class)->group(function () {
+    Route::get('/', 'homePage');
 });
+
+// Route::get('logout', [UserController::class, 'UserLogout']);
+
+// Route::get('userProfile', [UserController::class, 'ProfilePage']);
+
+// Route::get('dashboard', [DashboardController::class, 'DashboardPage']);
+
+// Route::get('categoryPage', [CategoryController::class, 'CategoryPage']);
+// Route::get('customerPage', [CustomerController::class, 'CustomerPage']);
+// Route::get('productPage', [ProductController::class, 'ProductPage']);
+
+// Route::get('invoicePage', [InvoiceController::class, 'InvoicePage']);
+// Route::get('salePage', [InvoiceController::class, 'SalePage']);
+// Route::get('reportPage', [ReportController::class, 'ReportPage']);
