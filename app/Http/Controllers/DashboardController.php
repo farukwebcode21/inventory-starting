@@ -6,6 +6,6 @@ class DashboardController extends Controller {
     //Dashboard pages route function
 
     public function dashboard() {
-        return view('pages.dashboard.profile-page');
+        return view('pages.dashboard.dashboard-page');
     }
 }
