@@ -24,26 +24,33 @@
     </div>
 </div>
 <Script>
-    async function SubmitLogin(event) {
-        event.preventDefault();
+    async function SubmitLogin() {
+
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
+
+        
 
         if (email.length === 0) {
             errorToast('Email is required');
         } else if (password.length === 0) {
             errorToast('Password is required');
         } else {
-            showLoader();
-            let res = await axios.post('user-login', {
-                email: email,
-                password: password
-            });
-            hideLoader();
-            if (res.status === 200 && res.data) {
-                window.location.href = "/dashboard";
-            } else {
-                errorToast(res.data['message'])
+            try {
+                let res = await axios.post('user-login', {
+                    email: email,
+                    password: password
+                });
+                if (res.status === 200) {
+                    window.location.href = '/dashboard';
+                } else {
+                   successToast('Successfully login')
+                }
+
+            } catch (error) {
+                errorToast('An error occured during login')
+            } finally {
+                hideLoader();
             }
         }
     }
